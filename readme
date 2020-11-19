@@ -1,0 +1,12 @@
+npm i bindings nan 
+node addon 有三种
+1. node-addon-api/c++ addon
+    直接使用内部的 V8、libuv 和 Node.js 库
+2. nan.cc   
+    直接使用 Node.js 和 V8 的 API 来实现插件。 V8 的 API 可能并且已经与下一个 V8 的发行版本有显著的变化。 伴随着每次变化，插件为了能够继续工作，可能需要进行更新和重新编译。
+    Node.js 的发布计划会尽量减少这种变化的频率和影响，但 Node.js 可以确保 V8 API 的稳定性。
+    Node.js 的原生抽象（或称为 nan）提供了一组工具，建议插件开发者使用这些工具来保持插件在过往与将来的 V8 和 Node.js 的版本之间的兼容性。 查看 nan 示例了解它是如何被使用的。
+3. n-api.cc  
+    N-API 是用于构建本机插件的API。 
+    它独立于底层 JavaScript 运行时（例如 V8），并作为 Node.js 本身的一部分进行维护。 此 API 将是跨 Node.js 版本的应用程序二进制接口（Application Binary Interface，ABI）稳定版。 它旨在将插件与底层 JavaScript 引擎中的更改隔离开来，并允许为一个版本编译的模块在更高版本的 Node.js 上运行而无需重新编译。 插件使用本文档中概述的相同方法/工具（node-gyp 等）构建/打包。 唯一的区别是原始代码使用的 API 集。 
+    不使用 V8 或 Node.js 的原生抽象，而是使用 N-API 中可用的功能。
